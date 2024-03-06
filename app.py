@@ -30,6 +30,7 @@ def is_valid_url(url):
         return all([
             parse_result.scheme in ['http', 'https'],
             parse_result.netloc,
+            parse_result.netloc not in 'unwrapmy.link'
         ])
     except:
         return False
@@ -78,6 +79,14 @@ def index():
 
     while response.status_code in [301, 302, 303, 307, 308]:
         redirects.append(follow)
+
+        if len(redirects) >= 100:
+            return flask.render_template(
+                'index.html',
+                start=start,
+                errors=['Too many redirects (limit = 100).'],
+            )
+
         follow = response.headers['Location']
         try:
             response = requests.get(follow, allow_redirects=False)
