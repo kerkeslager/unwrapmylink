@@ -205,42 +205,44 @@
       </section>
     {% endif %}
 
-    <section id='info'>
-      <table>
-        <tbody>
-          <tr>
-            <th>Cached:</th>
-            <td>
-              {% if cached %}
-                True
-              {% else %}
-                False
-              {% endif %}
-            </td>
-          </tr>
-
-          {% if redirects %}
+    {% if destination %}
+      <section id='info'>
+        <table>
+          <tbody>
             <tr>
-              <th>Redirects:</th>
+              <th>Cached:</th>
               <td>
-                <ul>
-                  {% for redirect in redirects %}
-                    <li>{{ redirect }}</li>
-                  {% endfor %}
-                </ul>
+                {% if cached %}
+                  True
+                {% else %}
+                  False
+                {% endif %}
               </td>
             </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </section>
+
+            {% if redirects %}
+              <tr>
+                <th>Redirects:</th>
+                <td>
+                  <ul>
+                    {% for redirect in redirects %}
+                      <li>{{ redirect }}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </section>
+    {% endif %}
 
     <footer>
       <nav>
       </nav>
 
       <section>
-        &copy; {{ now.year }}
+        &copy; {{ now.year }} by
         <a href='https://kerkeslager.com'>David Kerkeslager</a>
       </section>
     </footer>
