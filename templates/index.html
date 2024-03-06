@@ -153,6 +153,21 @@
             }
           }
         }
+
+        & > footer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+
+          & > nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+          }
+        }
       }
     </style>
   </head>
@@ -161,7 +176,7 @@
     <section id='form'>
       <h1>Unwrap My Link</h1>
       <p>
-        Submit a link to follow its redirects. Redirects will be performed on our
+        Submit a link to follow its redirects. Redirects will be followed on our
         server to protect your privacy.
       </p>
       <form method='get'>
@@ -239,7 +254,13 @@
 
     <footer>
       <nav>
+        <a href='https://github.com/kerkeslager/unwrapmylink'>code</a>
+        <a href=''>donate</a>
       </nav>
+
+      <section>
+        Costs of running this site are paid by donations from users like you!
+      </section>
 
       <section>
         &copy; {{ now.year }} by
