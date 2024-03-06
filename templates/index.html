@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+
+    <title>Unwrap My Link</title>
+
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Slab&family=Roboto+Serif&display=swap' rel='stylesheet'>
+
+    <style>
+      :root {
+        --fg: #001400;
+        --bg: #eee;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --fg: #e0e4e0;
+          --bg: #001400;
+        }
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        font-size: 125%;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+        gap: 2rem;
+        min-height: 100vh;
+        max-width: 100vw;
+
+        font-family: 'Roboto Serif', serif;
+
+        a, a:visited, a:focus, a:active {
+          color: var(--fg);
+        }
+
+        & h1 {
+          margin: 0;
+          font-size: 2rem;
+        }
+
+        & h2 {
+          margin: 0;
+          font-size: 1.6rem;
+        }
+
+        & a {
+          font-family: 'Roboto Mono', monospace;
+        }
+
+        color: var(--fg);
+        background: var(--bg);
+
+        & #form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
+
+          & form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+
+            .error {
+              color: #dd0000;
+            }
+
+            & > section {
+              display: flex;
+              flex-direction: row;
+              gap: 0.5rem;
+            }
+
+            & input {
+              border: 2px solid var(--fg);
+              color: var(--fg);
+              background: var(--bg);
+
+            }
+
+            & input[type='url'] {
+              font-size: 1rem;
+              font-family: 'Roboto Mono', monospace;
+              padding: 0.4rem 0.6rem;
+              caret-color: #00dd00;
+            }
+
+            & input[type='submit'] {
+              font-size: 1.2rem;
+              border-radius: 0.5rem;
+              cursor: pointer;
+              font-family: 'Roboto Slab', sans-serif;
+              padding: 0.2rem 0.7rem 0.4rem 0.7rem;
+            }
+
+            & input:focus {
+              outline: none;
+              border-color: #00dd00;
+            }
+
+            & input[type='submit']:focus {
+              color: #00dd00;
+            }
+          }
+
+        }
+
+        & #result {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        & #info {
+          & table {
+            border-collapse: collapse;
+            & th {
+              text-align: right;
+            }
+
+            & th, & td {
+              border: 1px solid var(--fg);
+              padding: 0.3rem 0.5rem;
+            }
+          }
+
+          & ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            & li {
+              font-size: 0.9rem;
+              font-family: 'Roboto Mono', monospace;
+            }
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <section id='form'>
+      <h1>Unwrap My Link</h1>
+      <p>
+        Submit a link to follow its redirects. Redirects will be performed on our
+        server to protect your privacy.
+      </p>
+      <form method='get'>
+        <section>
+          <input
+              type='url'
+              name='follow'
+              {% if start %}
+                value='{{ start }}'
+              {% endif %}
+              required />
+          <input type='submit' value='Follow' />
+        </section>
+
+        <section>
+          <label>
+            <input type='checkbox' name='redirect-on-complete' />
+            Redirect on success
+          </label>
+
+          <label>
+            <input type='checkbox' name='force-follow' />
+            Refresh cache
+          </label>
+        </section>
+
+        {% if errors %}
+          {% for error in errors %}
+            <section class='error'>
+              {{ error }}
+            </section>
+          {% endfor %}
+        {% endif %}
+      </form>
+    </section>
+
+    {% if destination %}
+      <section id='result'>
+        <h2>Final link:</h2>
+        <a href='${ destination }'>{{ destination }}</a>
+      </section>
+    {% endif %}
+
+    <section id='info'>
+      <table>
+        <tbody>
+          <tr>
+            <th>Cached:</th>
+            <td>
+              {% if cached %}
+                True
+              {% else %}
+                False
+              {% endif %}
+            </td>
+          </tr>
+
+          {% if redirects %}
+            <tr>
+              <th>Redirects:</th>
+              <td>
+                <ul>
+                  {% for redirect in redirects %}
+                    <li>{{ redirect }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
