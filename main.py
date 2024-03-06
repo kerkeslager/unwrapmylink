@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib.parse import urlparse
 import json
 import os
@@ -18,6 +19,10 @@ REDIS_CONNECTION = redis.Redis(
 )
 
 app = flask.Flask(__name__)
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
 
 def is_valid_url(url):
     try:
@@ -47,7 +52,7 @@ def index():
         )
 
     if not force_follow:
-        stored = REDIS_CONNECTION.get(follow)
+        stored = REDIS_CONNECTION.get('url:' + follow)
 
         if stored:
             result = json.loads(stored)
@@ -89,7 +94,7 @@ def index():
         'destination': follow
     }
 
-    REDIS_CONNECTION.set(start, json.dumps(result))
+    REDIS_CONNECTION.set('url:' + start, json.dumps(result))
 
     if redirect_on_complete:
         return flask.redirect(follow, code=307)
