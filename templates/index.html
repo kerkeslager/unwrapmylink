@@ -60,7 +60,7 @@
           font-size: 1.6rem;
         }
 
-        & a {
+        & a.destination {
           font-family: 'Roboto Mono', monospace;
         }
 
@@ -216,7 +216,7 @@
     {% if destination %}
       <section id='result'>
         <h2>Final link:</h2>
-        <a href='${ destination }'>{{ destination }}</a>
+        <a href='${ destination }' class='destination'>{{ destination }}</a>
       </section>
     {% endif %}
 
