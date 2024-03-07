@@ -2,6 +2,7 @@ from datetime import datetime
 from urllib.parse import urlparse
 import json
 import os
+import tomllib
 
 import redis
 import requests
@@ -11,6 +12,10 @@ import flask
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH = os.path.join(CURRENT_PATH, 'templates')
 STATIC_PATH = os.path.join(CURRENT_PATH, 'static')
+CONFIG_PATH = os.path.join(CURRENT_PATH, 'config.toml')
+
+with open(CONFIG_PATH, 'rb') as config_file:
+    CONFIG = tomllib.load(config_file)['unwrapmylink']
 
 REDIS_CONNECTION = redis.Redis(
     host='localhost',
