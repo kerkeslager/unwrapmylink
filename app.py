@@ -18,9 +18,8 @@ with open(CONFIG_PATH, 'rb') as config_file:
     CONFIG = tomllib.load(config_file)['unwrapmylink']
 
 REDIS_CONNECTION = redis.Redis(
-    host='localhost',
-    port=6379,
     db=0,
+    **(CONFIG['redis']),
 )
 
 app = flask.Flask(__name__)
