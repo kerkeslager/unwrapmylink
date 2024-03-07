@@ -88,37 +88,6 @@
               flex-direction: row;
               gap: 0.5rem;
             }
-
-            & input {
-              border: 2px solid var(--fg);
-              color: var(--fg);
-              background: var(--bg);
-
-            }
-
-            & input[type='url'] {
-              font-size: 1rem;
-              font-family: 'Roboto Mono', monospace;
-              padding: 0.4rem 0.6rem;
-              caret-color: #00dd00;
-            }
-
-            & input[type='submit'] {
-              font-size: 1.2rem;
-              border-radius: 0.5rem;
-              cursor: pointer;
-              font-family: 'Roboto Slab', sans-serif;
-              padding: 0.2rem 0.7rem 0.4rem 0.7rem;
-            }
-
-            & input:focus {
-              outline: none;
-              border-color: #00dd00;
-            }
-
-            & input[type='submit']:focus {
-              color: #00dd00;
-            }
           }
 
         }
@@ -128,6 +97,11 @@
           flex-direction: column;
           align-items: center;
           gap: 0.5rem;
+
+          padding: 1.6rem;
+
+          border: 2px dashed var(--fg);
+          border-radius: 2rem;
         }
 
         & #info {
@@ -169,6 +143,49 @@
           }
         }
       }
+
+      input {
+        border: 2px solid var(--fg);
+        color: var(--fg);
+        background: var(--bg);
+      }
+
+      input[type='url'] {
+        font-size: 1rem;
+        font-family: 'Roboto Mono', monospace;
+        padding: 0.4rem 0.6rem;
+        caret-color: #00dd00;
+      }
+
+      input[type='button'],
+      input[type='submit'] {
+        font-size: 1.2rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-family: 'Roboto Slab', sans-serif;
+        padding: 0.2rem 0.7rem 0.4rem 0.7rem;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #00dd00;
+      }
+
+      input[type='button']:focus,
+      input[type='submit']:focus {
+        color: #00dd00;
+      }
+
+      @media (max-width: 35rem) {
+        body #form form > section {
+          flex-direction: column;
+          align-items: flex-start;
+
+          & input[type='url'] {
+            width: calc(100vw - 6rem);
+          }
+        }
+      }
     </style>
   </head>
 
@@ -188,7 +205,7 @@
                 value='{{ start }}'
               {% endif %}
               required />
-          <input type='submit' value='Follow' />
+          <input type='submit' value='follow' />
         </section>
 
         <section>
